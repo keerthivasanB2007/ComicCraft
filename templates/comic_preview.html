@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comic Preview - ComicCraft</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="nav-container">
+      <a href="/" class="logo">
+        🎨 ComicCraft <span class="logo-badge">Gemini + SD</span>
+      </a>
+      <div class="nav-links">
+        <a href="/">Create New</a>
+        <a href="/export-success">PDF Export</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="card">
+      <div class="preview-header">
+        <div>
+          <h1 style="font-size: 2rem; font-weight: 800;">Your 5-Panel Comic Story</h1>
+          <div class="story-meta">
+            <span class="meta-chip"><strong>Character:</strong> {{ character_name }}</span>
+            <span class="meta-chip"><strong>Setting:</strong> {{ setting }}</span>
+            <span class="meta-chip"><strong>Tone:</strong> {{ tone }}</span>
+            <span class="meta-chip"><strong>Style:</strong> {{ art_style }}</span>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 1rem; align-items: center;">
+          <a href="/" class="btn-secondary">↺ Create Another</a>
+          <a href="{{ pdf_url }}" class="btn-download" download="comic_story.pdf">
+            📄 Download PDF
+          </a>
+        </div>
+      </div>
+
+      <!-- Individual Panel Story Breakdown -->
+      <h2 style="font-size: 1.4rem; margin-bottom: 1.25rem; color: #cbd5e1;">Story Panels Breakdown</h2>
+      
+      <div class="panel-grid">
+        {% for panel in panels %}
+        <div class="panel-card">
+          <div class="panel-card-header">
+            <span>Panel {{ panel.panel_number }}</span>
+            <span style="font-size: 0.85rem; color: var(--accent-yellow);">{{ panel.title }}</span>
+          </div>
+          
+          <div class="panel-img-wrap">
+            <img src="{{ panel_urls[loop.index0] }}" alt="Panel {{ panel.panel_number }} Illustration" loading="lazy">
+          </div>
+
+          <div class="panel-content">
+            <div class="panel-narration">
+              <strong>Narration:</strong> {{ panel.narration }}
+            </div>
+            {% if panel.dialogue %}
+            <div class="panel-dialogue">
+              <strong>Dialogue:</strong> "{{ panel.dialogue }}"
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- Master Comic Strip Canvas Display -->
+      <section class="full-comic-section">
+        <h2>Combined 5-Panel Comic Strip</h2>
+        <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+          Composite layout ready for export and high-resolution printing.
+        </p>
+
+        <div class="comic-canvas-frame">
+          <img src="{{ comic_image_url }}" alt="Full 5-Panel Comic Strip">
+        </div>
+
+        <div>
+          <a href="{{ pdf_url }}" class="btn-download" download="comic_story.pdf">
+            📄 Download Complete Comic as PDF
+          </a>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>ComicCraft • SDC AI Project • Powered by Google Gemini & Stable Diffusion</p>
+  </footer>
+
+</body>
+</html>

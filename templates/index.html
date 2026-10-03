@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ComicCraft - AI Comic Story Creator</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="nav-container">
+      <a href="/" class="logo">
+        🎨 ComicCraft <span class="logo-badge">Gemini + SD</span>
+      </a>
+      <div class="nav-links">
+        <a href="/">Create New</a>
+        <a href="/export-success">PDF Export</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>AI Comic Story Creator</h1>
+      <p>Transform your imagination into a high-quality 5-panel comic strip using Gemini Flash, Gemini Pro, and Stable Diffusion.</p>
+      
+      <div class="pipeline-bar">
+        <span class="pipe-step">1. User Input</span>
+        <span class="pipe-arrow">➜</span>
+        <span class="pipe-step">2. Gemini Flash (Outline)</span>
+        <span class="pipe-arrow">➜</span>
+        <span class="pipe-step">3. Gemini Pro (Story)</span>
+        <span class="pipe-arrow">➜</span>
+        <span class="pipe-step">4. Stable Diffusion</span>
+        <span class="pipe-arrow">➜</span>
+        <span class="pipe-step">5. 5-Panel Layout & PDF</span>
+      </div>
+    </section>
+
+    {% if error %}
+    <div class="alert alert-error">
+      <strong>⚠️ Error:</strong> {{ error }}
+    </div>
+    {% endif %}
+
+    <div class="card">
+      <form action="/generate" method="POST" id="comicForm" onsubmit="showLoading()">
+        <div class="form-grid">
+          
+          <div class="form-group full-width">
+            <label for="story_prompt">📝 Story Prompt <span style="color:var(--accent-red)">*</span></label>
+            <textarea 
+              id="story_prompt" 
+              name="story_prompt" 
+              rows="3" 
+              placeholder="Describe your comic story scenario in a few sentences..." 
+              required>{{ form_data.story_prompt if form_data else '' }}</textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="character_name">👤 Main Character Name <span style="color:var(--accent-red)">*</span></label>
+            <input 
+              type="text" 
+              id="character_name" 
+              name="character_name" 
+              placeholder="e.g. Maya, Detective Locke, Astro Boy" 
+              value="{{ form_data.character_name if form_data else '' }}" 
+              required>
+          </div>
+
+          <div class="form-group">
+            <label for="setting">🌍 Setting / Environment <span style="color:var(--accent-red)">*</span></label>
+            <input 
+              type="text" 
+              id="setting" 
+              name="setting" 
+              placeholder="e.g. Cyberpunk Neo-Tokyo, Medieval Enchanted Forest, Mars Base" 
+              value="{{ form_data.setting if form_data else '' }}" 
+              required>
+          </div>
+
+          <div class="form-group">
+            <label for="tone">🎭 Story Tone <span style="color:var(--accent-red)">*</span></label>
+            <select id="tone" name="tone" required>
+              {% for t in tones %}
+              <option value="{{ t }}" {% if form_data and form_data.tone == t %}selected{% endif %}>{{ t }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="art_style">🎨 Art Style <span style="color:var(--accent-red)">*</span></label>
+            <select id="art_style" name="art_style" required>
+              {% for s in art_styles %}
+              <option value="{{ s }}" {% if form_data and form_data.art_style == s %}selected{% endif %}>{{ s }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="form-group full-width" style="margin-top: 1rem;">
+            <button type="submit" class="btn-primary" id="submitBtn">
+              ⚡ Generate 5-Panel Comic
+            </button>
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <!-- Loading Overlay -->
+  <div id="loadingOverlay">
+    <div class="spinner"></div>
+    <h2 style="font-size: 1.5rem;">Crafting Your AI Comic Strip...</h2>
+    <p style="color: var(--text-muted); max-width: 450px;">
+      Running Gemini Flash outline, Gemini Pro narrative refinement, Stable Diffusion rendering, and layout composition. Please wait a moment.
+    </p>
+  </div>
+
+  <footer>
+    <p>ComicCraft • SDC AI Project • Powered by Google Gemini & Stable Diffusion</p>
+  </footer>
+
+  <script>
+    function showLoading() {
+      const form = document.getElementById('comicForm');
+      if (form.checkValidity()) {
+        document.getElementById('loadingOverlay').style.display = 'flex';
+        document.getElementById('submitBtn').disabled = true;
+        document.getElementById('submitBtn').innerText = 'Generating Comic...';
+      }
+    }
+  </script>
+</body>
+</html>

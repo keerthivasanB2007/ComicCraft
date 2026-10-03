@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF Export - ComicCraft</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="nav-container">
+      <a href="/" class="logo">
+        🎨 ComicCraft <span class="logo-badge">Gemini + SD</span>
+      </a>
+      <div class="nav-links">
+        <a href="/">Create New</a>
+        <a href="/export-success">PDF Export</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="card" style="text-align: center; max-width: 600px; margin: 2rem auto;">
+      <div style="font-size: 3.5rem; margin-bottom: 1rem;">📄</div>
+      <h1 style="font-size: 2rem; margin-bottom: 0.75rem;">PDF Export Status</h1>
+      
+      {% if pdf_exists %}
+      <div class="alert alert-success">
+        Your latest 5-panel comic PDF is ready for download!
+      </div>
+      <p style="color: var(--text-muted); margin-bottom: 2rem;">
+        The generated PDF preserves high-resolution artwork, captions, and layout structure formatted for A4 printing.
+      </p>
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="{{ pdf_url }}" class="btn-download" download="comic_story.pdf">
+          ⬇️ Download PDF Now
+        </a>
+        <a href="/" class="btn-secondary">
+          🎨 Create Another Comic
+        </a>
+      </div>
+      {% else %}
+      <div class="alert alert-error">
+        No active PDF found. Please generate a comic first.
+      </div>
+      <p style="color: var(--text-muted); margin-bottom: 2rem;">
+        Go back to the home page to start generating your 5-panel AI comic strip.
+      </p>
+      <a href="/" class="btn-primary" style="display: inline-flex; width: auto;">
+        Create Your First Comic
+      </a>
+      {% endif %}
+    </div>
+  </main>
+
+  <footer>
+    <p>ComicCraft • SDC AI Project • Powered by Google Gemini & Stable Diffusion</p>
+  </footer>
+
+</body>
+</html>

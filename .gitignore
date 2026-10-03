@@ -1,0 +1,23 @@
+# Environment files
+.env
+.env.local
+
+# Python caches and bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# Generated comic media and exports
+static/panels/
+static/exports/
+output/
+PANEL_IMAGES/
+
+# Video demos
+*.mp4
+
+# IDE files
+.vscode/
+.idea/
