@@ -110,7 +110,7 @@ The project uses a two-stage Large Language Model (LLM) pipeline combined with d
 ## 📁 Project Structure
 
 ```text
-ComicCrafter-AI/
+ComicCraft/
 ├── app/
 │   ├── __init__.py               # App package initialization
 │   ├── main.py                   # FastAPI initialization & static mounting
@@ -125,6 +125,24 @@ ComicCrafter-AI/
 │       ├── image_generator.py    # Stable Diffusion / Diffusers synthesizer
 │       ├── layout_builder.py     # Pillow 5-panel comic compositing engine
 │       └── exporters.py          # ReportLab PDF exporter
+│
+├── documentation/                # Complete 8-Phase SDC Project Documentation (PDFs)
+│   ├── 1. Brainstorming & Ideation/
+│   ├── 2. Requirement Analysis/
+│   ├── 3. Project Design Phase/
+│   ├── 4. Project Planning Phase/
+│   ├── 5. Project Development Phase/
+│   ├── 6. Project Testing/
+│   ├── 7. Project Documentation/
+│   └── 8. Project Demonstration/
+│
+├── project_outputs/              # Application UI screenshots and sample generated PDF
+│   ├── 01_home_form.jpeg
+│   ├── 02_comic_preview.jpeg
+│   ├── 03_full_comic_strip.jpeg
+│   └── comic_craft_story.pdf
+│
+├── SAMPLE_OUTPUT/                # Style visual examples (Manga, Anime, American, Belgian)
 │
 ├── templates/
 │   ├── index.html                # Main story generation form
@@ -157,8 +175,8 @@ ComicCrafter-AI/
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/Kashish415/ComicCrafter-AI.git
-cd ComicCrafter-AI
+git clone https://github.com/keerthivasanB2007/ComicCraft.git
+cd ComicCraft
 ```
 
 ### 2. Create and Activate a Virtual Environment

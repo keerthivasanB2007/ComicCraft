@@ -25,3 +25,6 @@ PANEL_IMAGES/
 # Virtual environment
 venv/
 .venv/
+
+# Internal working and audit files
+COMICCRAFT_DOCUMENTATION_*.md

@@ -14,15 +14,15 @@ def test_get_root():
     response = client.get("/")
     assert response.status_code == 200
     assert "ComicCraft" in response.text
-    assert "Story Prompt" in response.text
-    assert "Generate 5-Panel Comic" in response.text
+    assert "Story prompt" in response.text
+    assert "Generate my comic" in response.text
 
 
 def test_get_export_success_page():
     """Test GET /export-success renders successfully."""
     response = client.get("/export-success")
     assert response.status_code == 200
-    assert "PDF Export Status" in response.text
+    assert "PDF export" in response.text
 
 
 def test_get_test_image_endpoint():
@@ -82,7 +82,7 @@ def test_post_generate_success(
 
     response = client.post("/generate", data=payload)
     assert response.status_code == 200
-    assert "Your 5-Panel Comic Story" in response.text
+    assert "Your 5-panel comic" in response.text
     assert "Aria" in response.text
     assert "Lunar Crater" in response.text
     assert "Download PDF" in response.text
