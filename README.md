@@ -34,6 +34,7 @@ ComicCraft is a web application that turns a short story idea into a complete co
 - [Performance Observations](#performance-observations)
 - [Error Handling and Fallbacks](#error-handling-and-fallbacks)
 - [Sample Outputs](#sample-outputs)
+- [Demo Video](#demo-video)
 - [Current Limitations](#current-limitations)
 - [Future Enhancements](#future-enhancements)
 - [SDC Documentation](#sdc-documentation)
@@ -685,6 +686,14 @@ The repository includes sample material you can view without running the applica
 | `project_outputs/02_comic_preview.jpeg` | Screenshot of the panel-by-panel preview |
 | `project_outputs/03_full_comic_strip.jpeg` | Screenshot of the full 2-2-1 comic strip |
 | `project_outputs/comic_craft_story.pdf` | Sample single-page A4 PDF generated during verification |
+
+---
+
+## Demo Video
+
+Watch the ComicCraft project demonstration here:
+
+🎬 **[ComicCraft Demo Video (Google Drive)](https://drive.google.com/file/d/11cs1sl1KxB8IEHgF9qWN6xTGIXP2bGo8/view?usp=sharing)**
 
 ---
 
