@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ComicCraft - AI Comic Story Creator</title>
   <link rel="stylesheet" href="/static/css/style.css">
 </head>
+
 <body>
 
   <header>
@@ -13,94 +15,83 @@
       <a href="/" class="logo">
         🎨 ComicCraft <span class="logo-badge">Gemini + SD</span>
       </a>
-      <div class="nav-links">
+      <nav class="nav-links">
         <a href="/">Create New</a>
         <a href="/export-success">PDF Export</a>
-      </div>
+      </nav>
     </div>
   </header>
 
   <main>
     <section class="hero">
-      <h1>AI Comic Story Creator</h1>
-      <p>Transform your imagination into a high-quality 5-panel comic strip using Gemini Flash, Gemini Pro, and Stable Diffusion.</p>
-      
-      <div class="pipeline-bar">
-        <span class="pipe-step">1. User Input</span>
+      <h1>Turn your idea into a comic</h1>
+      <p>Describe a story and get a 5-panel comic strip, drawn and lettered by Gemini and Stable Diffusion.</p>
+
+      <div class="pipeline-bar" aria-label="How it works">
+        <span class="pipe-step">1. Your idea</span>
         <span class="pipe-arrow">➜</span>
-        <span class="pipe-step">2. Gemini Flash (Outline)</span>
+        <span class="pipe-step">2. Gemini Flash outline</span>
         <span class="pipe-arrow">➜</span>
-        <span class="pipe-step">3. Gemini Pro (Story)</span>
+        <span class="pipe-step">3. Gemini Pro story</span>
         <span class="pipe-arrow">➜</span>
-        <span class="pipe-step">4. Stable Diffusion</span>
+        <span class="pipe-step">4. Stable Diffusion art</span>
         <span class="pipe-arrow">➜</span>
-        <span class="pipe-step">5. 5-Panel Layout & PDF</span>
+        <span class="pipe-step">5. Layout &amp; PDF</span>
       </div>
     </section>
 
     {% if error %}
-    <div class="alert alert-error">
-      <strong>⚠️ Error:</strong> {{ error }}
+    <div class="alert alert-error" role="alert">
+      <strong>⚠️ Something went wrong:</strong> {{ error }}
     </div>
     {% endif %}
 
     <div class="card">
       <form action="/generate" method="POST" id="comicForm" onsubmit="showLoading()">
         <div class="form-grid">
-          
+
           <div class="form-group full-width">
-            <label for="story_prompt">📝 Story Prompt <span style="color:var(--accent-red)">*</span></label>
-            <textarea 
-              id="story_prompt" 
-              name="story_prompt" 
-              rows="3" 
-              placeholder="Describe your comic story scenario in a few sentences..." 
+            <label for="story_prompt">📝 Story prompt <span style="color:var(--pink)">*</span></label>
+            <textarea id="story_prompt" name="story_prompt" rows="3"
+              placeholder="A lonely robot finds a seed on an abandoned planet and decides to grow it..."
               required>{{ form_data.story_prompt if form_data else '' }}</textarea>
+            <span class="hint">A few sentences is enough. Include a goal or a problem for your character.</span>
           </div>
 
           <div class="form-group">
-            <label for="character_name">👤 Main Character Name <span style="color:var(--accent-red)">*</span></label>
-            <input 
-              type="text" 
-              id="character_name" 
-              name="character_name" 
-              placeholder="e.g. Maya, Detective Locke, Astro Boy" 
-              value="{{ form_data.character_name if form_data else '' }}" 
-              required>
+            <label for="character_name">👤 Main character <span style="color:var(--pink)">*</span></label>
+            <input type="text" id="character_name" name="character_name"
+              placeholder="e.g. Maya, Detective Locke, Astro Boy"
+              value="{{ form_data.character_name if form_data else '' }}" required>
           </div>
 
           <div class="form-group">
-            <label for="setting">🌍 Setting / Environment <span style="color:var(--accent-red)">*</span></label>
-            <input 
-              type="text" 
-              id="setting" 
-              name="setting" 
-              placeholder="e.g. Cyberpunk Neo-Tokyo, Medieval Enchanted Forest, Mars Base" 
-              value="{{ form_data.setting if form_data else '' }}" 
-              required>
+            <label for="setting">🌍 Setting <span style="color:var(--pink)">*</span></label>
+            <input type="text" id="setting" name="setting" placeholder="e.g. Neo-Tokyo, enchanted forest, Mars base"
+              value="{{ form_data.setting if form_data else '' }}" required>
           </div>
 
           <div class="form-group">
-            <label for="tone">🎭 Story Tone <span style="color:var(--accent-red)">*</span></label>
+            <label for="tone">🎭 Story tone <span style="color:var(--pink)">*</span></label>
             <select id="tone" name="tone" required>
               {% for t in tones %}
-              <option value="{{ t }}" {% if form_data and form_data.tone == t %}selected{% endif %}>{{ t }}</option>
+              <option value="{{ t }}" {% if form_data and form_data.tone==t %}selected{% endif %}>{{ t }}</option>
               {% endfor %}
             </select>
           </div>
 
           <div class="form-group">
-            <label for="art_style">🎨 Art Style <span style="color:var(--accent-red)">*</span></label>
+            <label for="art_style">🖌️ Art style <span style="color:var(--pink)">*</span></label>
             <select id="art_style" name="art_style" required>
               {% for s in art_styles %}
-              <option value="{{ s }}" {% if form_data and form_data.art_style == s %}selected{% endif %}>{{ s }}</option>
+              <option value="{{ s }}" {% if form_data and form_data.art_style==s %}selected{% endif %}>{{ s }}</option>
               {% endfor %}
             </select>
           </div>
 
-          <div class="form-group full-width" style="margin-top: 1rem;">
+          <div class="form-group full-width" style="margin-top: 0.75rem;">
             <button type="submit" class="btn-primary" id="submitBtn">
-              ⚡ Generate 5-Panel Comic
+              ⚡ Generate my comic
             </button>
           </div>
 
@@ -110,27 +101,44 @@
   </main>
 
   <!-- Loading Overlay -->
-  <div id="loadingOverlay">
-    <div class="spinner"></div>
-    <h2 style="font-size: 1.5rem;">Crafting Your AI Comic Strip...</h2>
-    <p style="color: var(--text-muted); max-width: 450px;">
-      Running Gemini Flash outline, Gemini Pro narrative refinement, Stable Diffusion rendering, and layout composition. Please wait a moment.
-    </p>
+  <div id="loadingOverlay" role="status" aria-live="polite">
+    <div class="loading-panels" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <h2>Drawing your comic...</h2>
+    <p id="loadingStatus">Outlining the story with Gemini Flash</p>
+    <p>This can take a minute or two. Keep this tab open.</p>
   </div>
 
   <footer>
-    <p>ComicCraft • SDC AI Project • Powered by Google Gemini & Stable Diffusion</p>
+    <p>ComicCraft • SDC AI Project • Powered by Google Gemini &amp; Stable Diffusion</p>
   </footer>
 
   <script>
+    const loadingSteps = [
+      'Outlining the story with Gemini Flash',
+      'Writing narration and dialogue with Gemini Pro',
+      'Painting each panel with Stable Diffusion',
+      'Laying out the strip and building your PDF'
+    ];
+
     function showLoading() {
       const form = document.getElementById('comicForm');
-      if (form.checkValidity()) {
-        document.getElementById('loadingOverlay').style.display = 'flex';
-        document.getElementById('submitBtn').disabled = true;
-        document.getElementById('submitBtn').innerText = 'Generating Comic...';
-      }
+      if (!form.checkValidity()) return;
+
+      document.getElementById('loadingOverlay').style.display = 'flex';
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.innerText = 'Generating...';
+
+      let i = 0;
+      const status = document.getElementById('loadingStatus');
+      setInterval(() => {
+        i = Math.min(i + 1, loadingSteps.length - 1);
+        status.textContent = loadingSteps[i];
+      }, 12000);
     }
   </script>
 </body>
+
 </html>

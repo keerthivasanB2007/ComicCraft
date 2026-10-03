@@ -21,3 +21,7 @@ PANEL_IMAGES/
 # IDE files
 .vscode/
 .idea/
+
+# Virtual environment
+venv/
+.venv/
